@@ -53,23 +53,23 @@ namespace CarBrand.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BrandName = "Toyota",
-                            CountryOrigin = "Japan",
-                            Year = 1937
+                            BrandName = "Audi",
+                            CountryOrigin = "Germany",
+                            Year = 1932
                         },
                         new
                         {
                             Id = 2,
-                            BrandName = "Ford",
+                            BrandName = "Chevrolet",
                             CountryOrigin = "USA",
-                            Year = 1903
+                            Year = 1911
                         },
                         new
                         {
                             Id = 3,
-                            BrandName = "Volkswagen",
+                            BrandName = "Porche",
                             CountryOrigin = "Germany",
-                            Year = 1937
+                            Year = 1931
                         });
                 });
 #pragma warning restore 612, 618

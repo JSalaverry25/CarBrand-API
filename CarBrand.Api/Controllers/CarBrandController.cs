@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarBrand.Api.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class CarBrandController : ControllerBase
@@ -18,16 +19,12 @@ namespace CarBrand.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResponse<CarBrandResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PagedResponse<CarBrandResponse>>> GetAll([FromQuery] CarBrandQueryParameters query)
+        public async Task<ActionResult<PagedResponse<CarBrandResponse>>> GetAll(
+            [FromQuery] CarBrandQueryParameters query)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _service.GetAllCarBrandsAsync(query.Page, query.PageSize);
+            var result = await _service.GetAllCarBrandsAsync(
+                query.Page,
+                query.PageSize);
 
             return Ok(new PagedResponse<CarBrandResponse>
             {
@@ -39,30 +36,20 @@ namespace CarBrand.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [ProducesResponseType(typeof(CarBrandResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CarBrandResponse>> GetById(int id)
         {
             var brand = await _service.GetCarBrandByIdAsync(id);
+
             if (brand is null)
-            {
                 return NotFound();
-            }
 
             return Ok(brand.ToResponse());
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(CarBrandResponse), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<CarBrandResponse>> Create([FromBody] CreateCarBrandRequest request)
+        public async Task<ActionResult<CarBrandResponse>> Create(
+            [FromBody] CreateCarBrandRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var carBrand = new Domain.CarBrand
             {
                 BrandName = request.Name,
@@ -72,21 +59,17 @@ namespace CarBrand.Api.Controllers
 
             var created = await _service.CreateCarBrandAsync(carBrand);
 
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToResponse());
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = created.Id },
+                created.ToResponse());
         }
 
         [HttpPut("{id:int}")]
-        [ProducesResponseType(typeof(CarBrandResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult<CarBrandResponse>> Update(int id, [FromBody] UpdateCarBrandRequest request)
+        public async Task<ActionResult<CarBrandResponse>> Update(
+            int id,
+            [FromBody] UpdateCarBrandRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var carBrand = new Domain.CarBrand
             {
                 BrandName = request.Name,
@@ -95,26 +78,23 @@ namespace CarBrand.Api.Controllers
             };
 
             var updated = await _service.UpdateCarBrandAsync(id, carBrand);
+
             if (updated is null)
-            {
                 return NotFound();
-            }
 
             return Ok(updated.ToResponse());
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _service.DeleteCarBrandAsync(id);
+
             if (!deleted)
-            {
                 return NotFound();
-            }
 
             return NoContent();
         }
     }
+
 }

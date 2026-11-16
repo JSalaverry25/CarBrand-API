@@ -1,8 +1,8 @@
 ﻿namespace CarBrand.Application
 {
-    public class CarBrandNameAlreadyExistsException : Exception
+    public class DuplicateCarBrandException : Exception
     {
-        public CarBrandNameAlreadyExistsException(string name)
+        public DuplicateCarBrandException(string name)
             : base($"A car brand named '{name}' already exists.")
         {
         }

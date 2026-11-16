@@ -9,7 +9,10 @@ namespace CarBrand.Infrastructure.Persistence
         public AppDbContext CreateDbContext(string[] args)
         {
             var connectionString =
-                "Host=localhost;Port=5432;Database=CarBrandDb;Username=postgres;Password=Sbr2026";
+                Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                ?? throw new InvalidOperationException(
+                    "No se encontró la variable ConnectionStrings__DefaultConnection."
+                );
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 

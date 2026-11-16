@@ -18,7 +18,7 @@ namespace CarBrand.Application
         {
             if (await _repository.ExistsByNameAsync(carBrand.BrandName))
             {
-                throw new CarBrandNameAlreadyExistsException(carBrand.BrandName);
+                throw new DuplicateCarBrandException(carBrand.BrandName);
             }
 
             return await _repository.AddNewCarBrandAsync(carBrand);
@@ -43,7 +43,7 @@ namespace CarBrand.Application
         {
             if (await _repository.ExistsByNameAsync(carBrand.BrandName, excludingId: id))
             {
-                throw new CarBrandNameAlreadyExistsException(carBrand.BrandName);
+                throw new DuplicateCarBrandException(carBrand.BrandName);
             }
 
             return await _repository.UpdateCarBrandAsync(id, carBrand);

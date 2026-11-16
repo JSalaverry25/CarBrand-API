@@ -25,9 +25,9 @@ namespace CarBrand.Infrastructure
             });
 
             modelBuilder.Entity<Domain.CarBrand>().HasData(
-                new Domain.CarBrand { Id = 1, BrandName = "Toyota", CountryOrigin = "Japan", Year = 1937 },
-                new Domain.CarBrand { Id = 2, BrandName = "Ford", CountryOrigin = "USA", Year = 1903 },
-                new Domain.CarBrand { Id = 3, BrandName = "Volkswagen", CountryOrigin = "Germany", Year = 1937 }
+                new Domain.CarBrand { Id = 1, BrandName = "Audi", CountryOrigin = "Germany", Year = 1932 },
+                new Domain.CarBrand { Id = 2, BrandName = "Chevrolet", CountryOrigin = "USA", Year = 1911 },
+                new Domain.CarBrand { Id = 3, BrandName = "Porche", CountryOrigin = "Germany", Year = 1931 }
             );
 
         }

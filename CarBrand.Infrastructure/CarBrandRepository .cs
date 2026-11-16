@@ -47,21 +47,19 @@ namespace CarBrand.Infrastructure
             };
         }
 
-        public async Task<Domain.CarBrand?> GetCarBrandByIdAsync(int id)
+        public Task<Domain.CarBrand?> GetCarBrandByIdAsync(int id)
         {
-            return await _context.CarBrands
+            return _context.CarBrands
                 .AsNoTracking()
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<bool> ExistsByNameAsync(
-            string name,
-            int? excludingId = null)
+        string name, int? excludingId = null)
         {
             var normalizedName = name.Trim().ToLower();
 
             var query = _context.CarBrands
-                .AsNoTracking()
                 .Where(b => b.BrandName.ToLower() == normalizedName);
 
             if (excludingId.HasValue)
@@ -82,7 +80,7 @@ namespace CarBrand.Infrastructure
             }
             catch (DbUpdateException ex) when (IsUniqueNameViolation(ex))
             {
-                throw new CarBrandNameAlreadyExistsException(carBrand.BrandName);
+                throw new DuplicateCarBrandException(carBrand.BrandName);
             }
 
             return carBrand;
@@ -110,7 +108,7 @@ namespace CarBrand.Infrastructure
             }
             catch (DbUpdateException ex) when (IsUniqueNameViolation(ex))
             {
-                throw new CarBrandNameAlreadyExistsException(carBrand.BrandName);
+                throw new DuplicateCarBrandException(carBrand.BrandName);
             }
 
             return existing;

@@ -41,8 +41,8 @@ namespace CarBrand.Tests.Repositories
             Assert.Equal(2, result.PageSize);
             Assert.Equal(2, result.Items.Count);
 
-            Assert.Equal("Toyota", result.Items[0].BrandName);
-            Assert.Equal("Ford", result.Items[1].BrandName);
+            Assert.Equal("Audi", result.Items[0].BrandName);
+            Assert.Equal("Chevrolet", result.Items[1].BrandName);
         }
 
         [Fact]
@@ -57,8 +57,8 @@ namespace CarBrand.Tests.Repositories
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("Toyota", result.BrandName);
-            Assert.Equal("Japan", result.CountryOrigin);
+            Assert.Equal("Audi", result.BrandName);
+            Assert.Equal("Germany", result.CountryOrigin);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace CarBrand.Tests.Repositories
             var repository = new CarBrandRepository(context);
 
             // Act
-            var result = await repository.ExistsByNameAsync(" toyota ");
+            var result = await repository.ExistsByNameAsync(" audi ");
 
             // Assert
             Assert.True(result);
@@ -97,7 +97,7 @@ namespace CarBrand.Tests.Repositories
             var repository = new CarBrandRepository(context);
 
             // Act
-            var result = await repository.ExistsByNameAsync("Toyota", 1);
+            var result = await repository.ExistsByNameAsync("Audi", 1);
 
             // Assert
             Assert.False(result);

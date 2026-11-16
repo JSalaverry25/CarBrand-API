@@ -17,7 +17,7 @@ namespace CarBrand.Api.ExceptionHandler
         {
             var (statusCode, title) = exception switch
             {
-                CarBrandNameAlreadyExistsException => (StatusCodes.Status409Conflict, exception.Message),
+                DuplicateCarBrandException => (StatusCodes.Status409Conflict, exception.Message),
                 _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred while processing the request.")
             };
 
