@@ -1,0 +1,45 @@
+﻿services:
+
+  postgres-test:
+    image: postgres:16
+    container_name: carbrand-postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: CarBrandTestDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - carbrand_postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d CarBrandTestDb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: carbrand-api-test
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Testing
+      ConnectionStrings__DefaultConnection: "Host=postgres-test;Port=5432;Database=CarBrandTestDb;Username=postgres;Password=${DB_PASSWORD}"
+    ports:
+      - "8081:8080"
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    container_name: carbrand-tests
+    command: ["dotnet", "test", "/src/CarBrand.Tests/CarBrand.Tests.csproj"]
+
+volumes:
+  carbrand_postgres_test_data:

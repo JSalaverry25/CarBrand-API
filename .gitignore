@@ -1,0 +1,27 @@
+# Variables de entorno y secretos
+.env
+.env.*
+
+# Archivos compilados de .NET
+**/bin/
+**/obj/
+
+# Archivos temporales de Visual Studio
+.vs/
+*.user
+*.suo
+
+@"
+# Variables de entorno y secretos
+.env
+.env.*
+
+# Archivos compilados de .NET
+**/bin/
+**/obj/
+
+# Archivos temporales de Visual Studio
+.vs/
+*.user
+*.suo
+"@ | Set-Content -Path ".gitignore"
