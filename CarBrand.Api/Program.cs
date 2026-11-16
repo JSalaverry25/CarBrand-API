@@ -33,7 +33,9 @@ if (app.Environment.IsDevelopment() ||
     dbContext.Database.Migrate();
 }
 
-if (app.Environment.IsDevelopment())
+var enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
+
+if (app.Environment.IsDevelopment() || enableSwagger)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
